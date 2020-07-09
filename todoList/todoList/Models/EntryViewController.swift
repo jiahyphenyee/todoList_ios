@@ -38,6 +38,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         // set date to today by default
         datePicker.setDate(Date(), animated: true)
+        datePicker.minimumDate = Date()
         
         // programmatically add 'Save' right barbutton
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didTapSaveButton))
