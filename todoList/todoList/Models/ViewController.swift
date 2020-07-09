@@ -42,6 +42,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         table.dataSource = self
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.refresh()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -71,7 +76,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // update data variables on refresh
         data = realm.objects(ToDoListItem.self).map({$0})
         table.reloadData()
-        
     }
 
 }

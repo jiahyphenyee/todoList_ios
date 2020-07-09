@@ -20,6 +20,17 @@ class ViewViewController: UIViewController {
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     
+//    @IBAction func didTapEditButton (sender: UIButton!) {
+//        
+//        guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? EntryViewController else { return }
+//
+//
+//        vc.title = "Edit Item"
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        vc.toDoItem = item
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
+    
     // format date object to string
     // static because expensive to create in memory - only created once
     static let dateFormatter: DateFormatter = {
@@ -35,6 +46,14 @@ class ViewViewController: UIViewController {
         dateLabel.text = Self.dateFormatter.string(from: item!.date)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDelete))
+        
+        let editButton = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+        editButton.backgroundColor = self.view.tintColor
+        editButton.setTitle("Edit", for: .normal)
+        editButton.setTitleColor(.white, for: .normal)
+        editButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        editButton.addTarget(self, action: #selector(didTapEdit), for: .touchUpInside)
+        self.view.addSubview(editButton)
 
     }
     
@@ -49,6 +68,17 @@ class ViewViewController: UIViewController {
         
         deletionHandler?()
         navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
+    
+    @objc private func didTapEdit(){
+        guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? EntryViewController else { return }
+        
+        vc.title = "Edit Item"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        vc.toDoItem = item
+        navigationController?.pushViewController(vc, animated: true)
         
     }
     

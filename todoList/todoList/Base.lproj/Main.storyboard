@@ -10,7 +10,7 @@
         <!--Todo List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="root" id="BYZ-38-t0r" customClass="ViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,7 +32,7 @@
                     <navigationItem key="navigationItem" title="Todo List" id="Z7n-dC-D1S">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lqx-bk-nwd">
                             <connections>
-                                <action selector="didTapAddButton" destination="BYZ-38-t0r" id="UKg-OS-rhJ"/>
+                                <action selector="didTapAddButton" destination="BYZ-38-t0r" id="Iqd-XR-ksr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -53,7 +53,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-zt-Lns">
-                                <rect key="frame" x="20" y="54" width="374" height="52"/>
+                                <rect key="frame" x="20" y="94" width="374" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="5Yo-XM-jdy"/>
                                 </constraints>
@@ -61,7 +61,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="MIL-fu-M0q">
-                                <rect key="frame" x="0.0" y="156" width="414" height="706"/>
+                                <rect key="frame" x="0.0" y="196" width="414" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="BEL-D6-I14"/>
+                                </constraints>
                             </datePicker>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -69,10 +72,10 @@
                             <constraint firstItem="NKb-sp-b34" firstAttribute="trailing" secondItem="ygo-zt-Lns" secondAttribute="trailing" constant="20" id="654-fe-Xbb"/>
                             <constraint firstItem="MIL-fu-M0q" firstAttribute="leading" secondItem="P5b-pE-Z40" secondAttribute="leading" id="AIq-u6-X5P"/>
                             <constraint firstItem="NKb-sp-b34" firstAttribute="trailing" secondItem="MIL-fu-M0q" secondAttribute="trailing" id="U2Q-zT-H6f"/>
-                            <constraint firstItem="ygo-zt-Lns" firstAttribute="top" secondItem="NKb-sp-b34" secondAttribute="top" constant="10" id="mMu-OP-3Dt"/>
+                            <constraint firstItem="ygo-zt-Lns" firstAttribute="top" secondItem="NKb-sp-b34" secondAttribute="top" constant="50" id="fJc-vF-C6g"/>
+                            <constraint firstItem="MIL-fu-M0q" firstAttribute="top" secondItem="ygo-zt-Lns" secondAttribute="bottom" constant="50" id="ixe-p8-q7Y"/>
                             <constraint firstItem="NKb-sp-b34" firstAttribute="bottom" secondItem="MIL-fu-M0q" secondAttribute="bottom" id="mWP-bw-8Cr"/>
                             <constraint firstItem="ygo-zt-Lns" firstAttribute="leading" secondItem="NKb-sp-b34" secondAttribute="leading" constant="20" id="o4B-Gz-3ok"/>
-                            <constraint firstItem="MIL-fu-M0q" firstAttribute="top" secondItem="ygo-zt-Lns" secondAttribute="bottom" constant="50" id="tY8-G3-nMy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NKb-sp-b34"/>
                     </view>

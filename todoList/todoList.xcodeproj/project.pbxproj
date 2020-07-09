@@ -72,6 +72,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F98809A24B704E90082E1CD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0FFDDC0324A6C362007DFFF5 /* ViewController.swift */,
+				0F98808D24AADE7A0082E1CD /* EntryViewController.swift */,
+				0F98808F24AADE850082E1CD /* ViewViewController.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		0FFDDBF324A6C362007DFFF5 = {
 			isa = PBXGroup;
 			children = (
@@ -95,15 +105,13 @@
 		0FFDDBFE24A6C362007DFFF5 /* todoList */ = {
 			isa = PBXGroup;
 			children = (
+				0F98809A24B704E90082E1CD /* Models */,
 				0FFDDBFF24A6C362007DFFF5 /* AppDelegate.swift */,
 				0FFDDC0124A6C362007DFFF5 /* SceneDelegate.swift */,
-				0FFDDC0324A6C362007DFFF5 /* ViewController.swift */,
 				0FFDDC0524A6C362007DFFF5 /* Main.storyboard */,
 				0FFDDC0824A6C365007DFFF5 /* Assets.xcassets */,
 				0FFDDC0A24A6C365007DFFF5 /* LaunchScreen.storyboard */,
 				0FFDDC0D24A6C365007DFFF5 /* Info.plist */,
-				0F98808D24AADE7A0082E1CD /* EntryViewController.swift */,
-				0F98808F24AADE850082E1CD /* ViewViewController.swift */,
 			);
 			path = todoList;
 			sourceTree = "<group>";
