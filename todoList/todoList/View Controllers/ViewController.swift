@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //
     
     private let realm = try! Realm()
-    private var data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
+    private var data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
     
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -47,9 +47,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
           
         switch scopeBar.selectedSegmentIndex {
         case 1:
+            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
+        case 2:
             data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "date", ascending: true)
         default:
-            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
+            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
           }
           
         table.reloadData()
@@ -83,8 +85,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
-        
-        cell.textLabel?.text = data[indexPath.row].item
+        let prior = getPriorityLabel(index: data[indexPath.row].priority)
+    
+        cell.textLabel?.text = prior + data[indexPath.row].item
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
         
         return cell
@@ -123,7 +126,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func refresh(){
         // update data variables on refresh
-        data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
+        data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
         table.reloadData()
     }
     
@@ -133,6 +136,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         try! realm.commitWrite()
 
         self.refresh()
+    }
+    
+    func getPriorityLabel(index: Int) -> String {
+        var priorityField: String
+        
+        switch index {
+            case 0:
+                priorityField = "‼️"
+            case 1:
+                priorityField = "❗️"
+            case 2:
+                priorityField = "⭕️"
+            default:
+                priorityField = "❗️"
+        }
+        
+        return priorityField
     }
     
     
