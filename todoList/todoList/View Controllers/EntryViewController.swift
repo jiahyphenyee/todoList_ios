@@ -15,16 +15,52 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Variables And Properties
     //
     
+    var toDoItem: ToDoItems1!
+    // reference to db
+    private let realm = try! Realm()
+    // let list view controller know that an entry is added -> refresh
+    public var completionHandler: (() -> Void)?
+    
+    
+    //
+    // MARK: - IBActions and IBOutlets
+    //
+    
     @IBOutlet var textField: UITextField!
     @IBOutlet var detailsField: UITextView!
     @IBOutlet var datePicker: UIDatePicker!
-    var toDoItem: ToDoListItem2!
     
-    // reference to db
-    private let realm = try! Realm()
+    @IBAction func priorityDidChange(sender: Any) {
+        let scopeBar = sender as! UISegmentedControl
+        switch scopeBar.selectedSegmentIndex {
+            case 0:
+                toDoItem.priority = 0
+            case 1:
+                toDoItem.priority = 1
+            case 2:
+                toDoItem.priority = 2
+            default:
+                break
+        }
+    }
     
-    // let list view controller know that an entry is added -> refresh
-    public var completionHandler: (() -> Void)?
+    @IBAction func labelDidChange(sender: Any) {
+        let scopeBar = sender as! UISegmentedControl
+        switch scopeBar.selectedSegmentIndex {
+            case 0:
+                toDoItem.label = "👩🏻"   // personal
+            case 1:
+                toDoItem.label = "💻"   // work
+            case 2:
+                toDoItem.label = "🛒"   // shopping
+            case 3:
+                toDoItem.label = "🏋🏽‍♀️"   // fitness
+            case 4:
+                toDoItem.label = "📚"   // reading
+            default:
+                break
+        }
+    }
     
     //
     // MARK: - View Controller
@@ -45,6 +81,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         textField.becomeFirstResponder()
         textField.delegate = self
 
+        // customise details field
         detailsField.layer.borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
         detailsField.layer.borderWidth = 1.0;
         detailsField.layer.cornerRadius = 5.0;
@@ -53,8 +90,11 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         datePicker.setDate(Date(), animated: true)
         datePicker.minimumDate = Date()
         
+        // save button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didTapSaveButton))
+        
     }
+    
     
     //
     // MARK: - Text Field Functions
@@ -89,7 +129,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     func createToDoItem() {
         let date = datePicker.date
         realm.beginWrite()
-        let newItem = ToDoListItem2()
+        let newItem = ToDoItems1()
         newItem.date = date
         newItem.item = textField.text!
         newItem.details = detailsField.text ?? ""
@@ -142,6 +182,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
     
     func emptyInputAlert() {
         // Create new Alert

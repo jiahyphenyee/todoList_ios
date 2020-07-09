@@ -9,13 +9,6 @@
 import RealmSwift
 import UIKit
 
-class ToDoListItem2: Object {
-    @objc dynamic var item: String = ""
-    @objc dynamic var date: Date = Date()
-    @objc dynamic var details: String = ""
-    
-}
-
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //
@@ -23,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //
     
     private let realm = try! Realm()
-    private var data = try! Realm().objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
+    private var data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
     
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -54,9 +47,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
           
         switch scopeBar.selectedSegmentIndex {
         case 1:
-            data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "date", ascending: true)
+            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "date", ascending: true)
         default:
-            data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
+            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
           }
           
         table.reloadData()
@@ -69,7 +62,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        data = realm.objects(ToDoListItem.self).map({$0})
+//        data = realm.objects(ToDoItems1.self).map({$0})
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.delegate = self
         table.dataSource = self
@@ -130,11 +123,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func refresh(){
         // update data variables on refresh
-        data = try! Realm().objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
+        data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
         table.reloadData()
     }
     
-    func deleteItem(myItem: ToDoListItem2){
+    func deleteItem(myItem: ToDoItems1){
         realm.beginWrite()
         realm.delete(myItem)
         try! realm.commitWrite()

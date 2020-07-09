@@ -16,7 +16,7 @@ class ViewViewController: UIViewController {
     //
     
     private let realm = try! Realm()
-    public var item: ToDoListItem2?
+    public var item: ToDoItems1?
     
     // refresh when item is deleted
     public var deletionHandler: (() -> Void)?
