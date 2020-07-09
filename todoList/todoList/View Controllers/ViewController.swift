@@ -25,6 +25,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private let realm = try! Realm()
     private var data = try! Realm().objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
     
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        return dateFormatter
+    }()
+    
     //
     // MARK: - IBOutlets and IBActions
     //
@@ -43,17 +49,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func sortSegment(sender: Any) {
-      let scopeBar = sender as! UISegmentedControl
-      let realm = try! Realm()
-      
-      switch scopeBar.selectedSegmentIndex {
-      case 1:
-        data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "date", ascending: true)
-      default:
-        data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
-      }
-      
-      table.reloadData()
+        let scopeBar = sender as! UISegmentedControl
+        let realm = try! Realm()
+          
+        switch scopeBar.selectedSegmentIndex {
+        case 1:
+            data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "date", ascending: true)
+        default:
+            data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
+          }
+          
+        table.reloadData()
     }
     
     
@@ -83,11 +89,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
         
         cell.textLabel?.text = data[indexPath.row].item
-        // TO-DO: fix not appearing
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
+        
         return cell
     }
     
@@ -136,10 +142,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.refresh()
     }
     
-    static let dateFormatter: DateFormatter = {
-           let dateFormatter = DateFormatter()
-           dateFormatter.dateStyle = .medium
-           return dateFormatter
-       }()
+    
 
 }
