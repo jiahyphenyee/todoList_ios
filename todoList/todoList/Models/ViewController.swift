@@ -30,6 +30,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        return dateFormatter
+    }()
+    
     private let realm = try! Realm()
     private var data = [ToDoListItem]()
 
@@ -47,16 +53,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.refresh()
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = data[indexPath.row].item
+        cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -72,10 +82,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            let myItem = data[indexPath.row]
+            self.deleteItem(myItem: myItem)
+        }
+    }
+   
+    
     func refresh(){
         // update data variables on refresh
         data = realm.objects(ToDoListItem.self).map({$0})
         table.reloadData()
+    }
+    
+    func deleteItem(myItem: ToDoListItem){
+        realm.beginWrite()
+        realm.delete(myItem)
+        try! realm.commitWrite()
+
+        self.refresh()
     }
 
 }

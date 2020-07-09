@@ -47,11 +47,13 @@ class ViewViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDelete))
         
-        let editButton = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+        let editButton = UIButton(frame: CGRect(x: 100, y: 400, width: 100, height: 50))
         editButton.backgroundColor = self.view.tintColor
         editButton.setTitle("Edit", for: .normal)
         editButton.setTitleColor(.white, for: .normal)
         editButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        editButton.layer.cornerRadius = 5
+        editButton.center = self.view.center
         editButton.addTarget(self, action: #selector(didTapEdit), for: .touchUpInside)
         self.view.addSubview(editButton)
 

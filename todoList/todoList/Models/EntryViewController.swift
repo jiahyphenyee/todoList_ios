@@ -50,7 +50,6 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     
     
     func fillItemFields() {
-        print("filling item fields")
         textField.text = toDoItem.item
         datePicker.setDate(toDoItem.date, animated: false)
     }
@@ -58,7 +57,6 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     
     func updateToDoItem() {
         try! realm.write {
-            print("writing...")
             toDoItem.item = textField.text!
             toDoItem.date = datePicker.date
         }
