@@ -23,8 +23,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private let realm = try! Realm()
     private var data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
-    var searchController: UISearchController!
-    var searchResults = try! Realm().objects(ToDoListItem.self)
     
     //
     // MARK: - IBOutlets and IBActions
@@ -58,7 +56,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-    
     //
     // MARK: - View Controller
     //
@@ -86,8 +83,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-//        let item = searchController.isActive ? searchResults[indexPath.row] : data[indexPath.row]
         
         cell.textLabel?.text = data[indexPath.row].item
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
@@ -125,22 +120,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - Private Methods
     //
     
-    func filterResultsWithSearchString(searchString: String) {
-      let predicate = NSPredicate(format: "name BEGINSWITH [c]%@", searchString) // case insensitive search
-      let scopeIndex = searchController.searchBar.selectedScopeButtonIndex // 2
-      let realm = try! Realm()
-
-      switch scopeIndex {
-      case 0:
-        searchResults = realm.objects(ToDoListItem.self).filter(predicate).sorted(byKeyPath: "item", ascending: true) // 3
-      case 1:
-        searchResults = realm.objects(ToDoListItem.self).filter(predicate).sorted(byKeyPath: "date", ascending: true) // 4
-      default:
-        searchResults = realm.objects(ToDoListItem.self).filter(predicate) // 5
-      }
-    }
-
-    
     func refresh(){
         // update data variables on refresh
         data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
@@ -162,14 +141,3 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        }()
 
 }
-
-//extension ViewController: UISearchResultsUpdating {
-//  func updateSearchResults(for searchController: UISearchController) {
-//    let searchString = searchController.searchBar.text!
-//    filterResultsWithSearchString(searchString: searchString)
-//
-//    let searchResultsController = searchController.searchResultsController as! UITableViewController
-//    searchResultsController.tableView.reloadData()
-//  }
-//}
-
