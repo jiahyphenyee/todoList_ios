@@ -1,20 +1,21 @@
 # todoList_ios
-This is a todo list ios application built using Swift 5. 
+This is a to-do list ios application built using Swift 5. 
 
 ## Setting up
-1. navigate root folder
-2. run `pod install`
+1. `cd todoList`
+2. Run `pod install`
 
 ## Running the application
-1. open `todoList.xcworkspace`
+1. Open `todoList.xcworkspace`
 2. `(⌘R)` to run
 
 ## Functionalities
-* add new Todo
-* delete Todo (swipe or delete button)
-* edit/update Todo details
-* sort list by alphabet or due date
+* Add new to-do item
+* View to-do item details
+* Delete to-do item (swipe or delete button)
+* Edit/update to-do details
+* Sort list by alphabet or due date
 
 ## Other Considerations
-* due dates cannot backdate from current date
-* name for todo item cannot be empty
+* Due dates cannot backdate from current date
+* Name for to-do item cannot be empty
