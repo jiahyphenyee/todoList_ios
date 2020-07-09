@@ -88,10 +88,25 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                 
             } else {
                 print("Add something")
+                emptyInputAlert()
             }
             
         }
         
+    }
+    
+    
+    func emptyInputAlert() {
+        // Create new Alert
+        let dialogMessage = UIAlertController(title: "Error", message: "Please type something", preferredStyle: .alert)
+        
+        // Create OK button with action handler
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            print("Ok button tapped")
+         })
+        
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
     }
     
 }
