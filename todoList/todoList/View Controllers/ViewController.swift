@@ -9,9 +9,10 @@
 import RealmSwift
 import UIKit
 
-class ToDoListItem: Object {
+class ToDoListItem2: Object {
     @objc dynamic var item: String = ""
     @objc dynamic var date: Date = Date()
+    @objc dynamic var details: String = ""
     
 }
 
@@ -22,7 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //
     
     private let realm = try! Realm()
-    private var data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
+    private var data = try! Realm().objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
     
     //
     // MARK: - IBOutlets and IBActions
@@ -47,9 +48,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       
       switch scopeBar.selectedSegmentIndex {
       case 1:
-        data = realm.objects(ToDoListItem.self).sorted(byKeyPath: "date", ascending: true)
+        data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "date", ascending: true)
       default:
-        data = realm.objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
+        data = realm.objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
       }
       
       table.reloadData()
@@ -85,6 +86,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = data[indexPath.row].item
+        // TO-DO: fix not appearing
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
         return cell
     }
@@ -122,11 +124,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func refresh(){
         // update data variables on refresh
-        data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
+        data = try! Realm().objects(ToDoListItem2.self).sorted(byKeyPath: "item", ascending: true)
         table.reloadData()
     }
     
-    func deleteItem(myItem: ToDoListItem){
+    func deleteItem(myItem: ToDoListItem2){
         realm.beginWrite()
         realm.delete(myItem)
         try! realm.commitWrite()

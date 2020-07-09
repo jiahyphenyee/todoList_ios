@@ -11,25 +11,24 @@ import UIKit
 
 class ViewViewController: UIViewController {
     
+    //
+    // MARK: - Variables And Properties
+    //
+    
     private let realm = try! Realm()
-    public var item: ToDoListItem?
+    public var item: ToDoListItem2?
     
     // refresh when item is deleted
     public var deletionHandler: (() -> Void)?
     
+    //
+    // MARK: - IBOutlet
+    //
+    
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var detailLabel: UITextView!
     
-//    @IBAction func didTapEditButton (sender: UIButton!) {
-//        
-//        guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? EntryViewController else { return }
-//
-//
-//        vc.title = "Edit Item"
-//        vc.navigationItem.largeTitleDisplayMode = .never
-//        vc.toDoItem = item
-//        navigationController?.pushViewController(vc, animated: true)
-//    }
     
     // format date object to string
     // static because expensive to create in memory - only created once
@@ -38,12 +37,17 @@ class ViewViewController: UIViewController {
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
+    
+    //
+    // MARK: - View Controller
+    //
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         itemLabel.text = item?.item
         dateLabel.text = Self.dateFormatter.string(from: item!.date)
+        detailLabel.text = item?.details
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDelete))
         
@@ -58,6 +62,10 @@ class ViewViewController: UIViewController {
         self.view.addSubview(editButton)
 
     }
+    
+    //
+    // MARK: - Private Functions
+    //
     
     @objc private func didTapDelete(){
         // unwrap item property on this controller
