@@ -16,6 +16,19 @@ class ToDoListItem: Object {
 }
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    //
+    // MARK: - Variables And Properties
+    //
+    
+    private let realm = try! Realm()
+    private var data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
+    var searchController: UISearchController!
+    var searchResults = try! Realm().objects(ToDoListItem.self)
+    
+    //
+    // MARK: - IBOutlets and IBActions
+    //
 
     @IBOutlet var table: UITableView!
     
@@ -30,19 +43,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    static let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        return dateFormatter
-    }()
+    @IBAction func sortSegment(sender: Any) {
+      let scopeBar = sender as! UISegmentedControl
+      let realm = try! Realm()
+      
+      switch scopeBar.selectedSegmentIndex {
+      case 1:
+        data = realm.objects(ToDoListItem.self).sorted(byKeyPath: "date", ascending: true)
+      default:
+        data = realm.objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
+      }
+      
+      table.reloadData()
+    }
     
-    private let realm = try! Realm()
-    private var data = [ToDoListItem]()
-
+    
+    
+    //
+    // MARK: - View Controller
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        data = realm.objects(ToDoListItem.self).map({$0})
+//        data = realm.objects(ToDoListItem.self).map({$0})
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.delegate = self
         table.dataSource = self
@@ -53,7 +76,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.refresh()
     }
     
-    
+    //
+    // MARK: - Table View
+    //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -61,6 +86,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+//        let item = searchController.isActive ? searchResults[indexPath.row] : data[indexPath.row]
         
         cell.textLabel?.text = data[indexPath.row].item
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
@@ -93,11 +120,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.deleteItem(myItem: myItem)
         }
     }
-   
+    
+    //
+    // MARK: - Private Methods
+    //
+    
+    func filterResultsWithSearchString(searchString: String) {
+      let predicate = NSPredicate(format: "name BEGINSWITH [c]%@", searchString) // case insensitive search
+      let scopeIndex = searchController.searchBar.selectedScopeButtonIndex // 2
+      let realm = try! Realm()
+
+      switch scopeIndex {
+      case 0:
+        searchResults = realm.objects(ToDoListItem.self).filter(predicate).sorted(byKeyPath: "item", ascending: true) // 3
+      case 1:
+        searchResults = realm.objects(ToDoListItem.self).filter(predicate).sorted(byKeyPath: "date", ascending: true) // 4
+      default:
+        searchResults = realm.objects(ToDoListItem.self).filter(predicate) // 5
+      }
+    }
+
     
     func refresh(){
         // update data variables on refresh
-        data = realm.objects(ToDoListItem.self).map({$0})
+        data = try! Realm().objects(ToDoListItem.self).sorted(byKeyPath: "item", ascending: true)
         table.reloadData()
     }
     
@@ -108,6 +154,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         self.refresh()
     }
+    
+    static let dateFormatter: DateFormatter = {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateStyle = .medium
+           return dateFormatter
+       }()
 
 }
+
+//extension ViewController: UISearchResultsUpdating {
+//  func updateSearchResults(for searchController: UISearchController) {
+//    let searchString = searchController.searchBar.text!
+//    filterResultsWithSearchString(searchString: searchString)
+//
+//    let searchResultsController = searchController.searchResultsController as! UITableViewController
+//    searchResultsController.tableView.reloadData()
+//  }
+//}
 
