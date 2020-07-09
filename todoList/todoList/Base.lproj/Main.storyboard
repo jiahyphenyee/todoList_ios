@@ -18,6 +18,7 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hYu-aq-EeC">
                                 <rect key="frame" x="0.0" y="148.5" width="414" height="32"/>
                                 <segments>
+                                    <segment title="Priority"/>
                                     <segment title="A - Z"/>
                                     <segment title="Due Date"/>
                                 </segments>
@@ -37,7 +38,7 @@
                             <constraint firstItem="k9c-7f-xNr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ran-af-ZAb"/>
                             <constraint firstItem="k9c-7f-xNr" firstAttribute="top" secondItem="hYu-aq-EeC" secondAttribute="bottom" id="cL8-lj-fC4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hYu-aq-EeC" secondAttribute="trailing" id="kWA-Yq-bF3"/>
-                            <constraint firstAttribute="bottom" secondItem="k9c-7f-xNr" secondAttribute="bottom" id="sRu-Ab-dDK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k9c-7f-xNr" secondAttribute="bottom" id="sRu-Ab-dDK"/>
                             <constraint firstItem="hYu-aq-EeC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="v7i-xm-C8t"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -99,7 +100,7 @@
                                     <segment title="📚"/>
                                 </segments>
                                 <connections>
-                                    <action selector="labelDidChange:" destination="l9N-dh-poD" eventType="valueChanged" id="Ied-r9-wcu"/>
+                                    <action selector="labelDidChangeWithSender:" destination="l9N-dh-poD" eventType="valueChanged" id="LwB-hN-Iqc"/>
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="b9F-WO-DPg">
@@ -110,7 +111,7 @@
                                     <segment title="⭕️ Low"/>
                                 </segments>
                                 <connections>
-                                    <action selector="priorityDidChange:" destination="l9N-dh-poD" eventType="valueChanged" id="Qf4-44-X5K"/>
+                                    <action selector="priorityDidChangeWithSender:" destination="l9N-dh-poD" eventType="valueChanged" id="IXw-Cp-2zv"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
@@ -147,7 +148,6 @@
         <!--View View Controller-->
         <scene sceneID="LH6-NR-TXt">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iec-bU-Cky" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="view" id="rQ0-0o-JAf" customClass="ViewViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gO0-Dq-Qe8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -168,8 +168,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="⌛️ Due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKu-Qx-pxN">
-                                <rect key="frame" x="20" y="145" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⌛️ Due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKu-Qx-pxN">
+                                <rect key="frame" x="20" y="145" width="59.5" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -221,6 +221,7 @@
                             <constraint firstItem="NKp-hO-haw" firstAttribute="leading" secondItem="kKW-3a-ymh" secondAttribute="leading" constant="20" id="PWh-6J-qlZ"/>
                             <constraint firstItem="80t-zf-SF4" firstAttribute="top" secondItem="uKu-Qx-pxN" secondAttribute="bottom" constant="10" id="PrP-gc-Ri9"/>
                             <constraint firstItem="ZRY-4A-49P" firstAttribute="leading" secondItem="GSW-io-r9b" secondAttribute="trailing" constant="8" id="Qd7-Gn-2t3"/>
+                            <constraint firstItem="uKu-Qx-pxN" firstAttribute="leading" secondItem="kKW-3a-ymh" secondAttribute="leading" constant="20" id="RHG-oZ-L3o"/>
                             <constraint firstItem="GSW-io-r9b" firstAttribute="top" secondItem="kKW-3a-ymh" secondAttribute="top" constant="20" id="Tof-N2-S9W"/>
                             <constraint firstItem="ZRY-4A-49P" firstAttribute="top" secondItem="kKW-3a-ymh" secondAttribute="top" constant="20" id="VvZ-3Z-pZi"/>
                             <constraint firstItem="903-ya-caa" firstAttribute="top" secondItem="mq8-29-8Ev" secondAttribute="bottom" constant="10" id="ZM3-Tx-lIB"/>
@@ -239,8 +240,11 @@
                         <outlet property="dateLabel" destination="80t-zf-SF4" id="1Ce-ai-zCF"/>
                         <outlet property="detailLabel" destination="903-ya-caa" id="OE5-Kn-yBd"/>
                         <outlet property="itemLabel" destination="Zsm-ZZ-XPH" id="qjJ-ek-0au"/>
+                        <outlet property="labelLabel" destination="ZRY-4A-49P" id="xwp-7N-gAk"/>
+                        <outlet property="priorityLabel" destination="GSW-io-r9b" id="zMd-O2-CJm"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iec-bU-Cky" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2941" y="118"/>
         </scene>

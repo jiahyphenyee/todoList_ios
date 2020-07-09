@@ -20,6 +20,8 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     private let realm = try! Realm()
     // let list view controller know that an entry is added -> refresh
     public var completionHandler: (() -> Void)?
+    private var priorityField = 1
+    private var labelField = "hello"
     
     
     //
@@ -34,11 +36,11 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         let scopeBar = sender as! UISegmentedControl
         switch scopeBar.selectedSegmentIndex {
             case 0:
-                toDoItem.priority = 0
+                priorityField = 0
             case 1:
-                toDoItem.priority = 1
+                priorityField = 1
             case 2:
-                toDoItem.priority = 2
+                priorityField = 2
             default:
                 break
         }
@@ -48,15 +50,15 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         let scopeBar = sender as! UISegmentedControl
         switch scopeBar.selectedSegmentIndex {
             case 0:
-                toDoItem.label = "👩🏻"   // personal
+                labelField = "👩🏻"   // personal
             case 1:
-                toDoItem.label = "💻"   // work
+                labelField = "💻"   // work
             case 2:
-                toDoItem.label = "🛒"   // shopping
+                labelField = "🛒"   // shopping
             case 3:
-                toDoItem.label = "🏋🏽‍♀️"   // fitness
+                labelField = "🏋🏽‍♀️"   // fitness
             case 4:
-                toDoItem.label = "📚"   // reading
+                labelField = "📚"   // reading
             default:
                 break
         }
@@ -76,6 +78,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             title = "Add New Item"
             detailsField.text = "Description"
             detailsField.textColor = UIColor.lightGray
+            
         }
 
         textField.becomeFirstResponder()
@@ -128,11 +131,14 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     // create new item
     func createToDoItem() {
         let date = datePicker.date
+        
         realm.beginWrite()
         let newItem = ToDoItems1()
         newItem.date = date
         newItem.item = textField.text!
         newItem.details = detailsField.text ?? ""
+        newItem.priority = priorityField
+        newItem.label = labelField
         realm.add(newItem)
         try! realm.commitWrite()
         
@@ -158,6 +164,8 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             toDoItem.item = textField.text!
             toDoItem.date = datePicker.date
             toDoItem.details = detailsField.text!
+            toDoItem.priority = priorityField
+            toDoItem.label = labelField
         }
         
         completionHandler?()

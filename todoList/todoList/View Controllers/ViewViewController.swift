@@ -28,6 +28,8 @@ class ViewViewController: UIViewController {
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var detailLabel: UITextView!
+    @IBOutlet var priorityLabel: UILabel!
+    @IBOutlet var labelLabel: UILabel!
     
     
     // format date object to string
@@ -48,10 +50,22 @@ class ViewViewController: UIViewController {
         itemLabel.text = item?.item
         dateLabel.text = Self.dateFormatter.string(from: item!.date)
         detailLabel.text = item?.details
+        labelLabel.text = item?.label
+        
+        switch item?.priority {
+        case 0:
+            priorityLabel.text = "‼️"
+        case 1:
+            priorityLabel.text = "❗️"
+        case 2:
+            priorityLabel.text = "⭕️"
+        default:
+            break
+        }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDelete))
         
-        let editButton = UIButton(frame: CGRect(x: 100, y: 400, width: 100, height: 50))
+        let editButton = UIButton(frame: CGRect(x: 100, y: 400, width: 200, height: 50))
         editButton.backgroundColor = self.view.tintColor
         editButton.setTitle("Edit", for: .normal)
         editButton.setTitleColor(.white, for: .normal)
