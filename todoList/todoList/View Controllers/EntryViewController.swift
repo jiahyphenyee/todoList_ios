@@ -20,7 +20,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     private let realm = try! Realm()
     // let list view controller know that an entry is added -> refresh
     public var completionHandler: (() -> Void)?
-    private var labelField: String!
+    private var labelField = "👩🏻"
     
     
     //

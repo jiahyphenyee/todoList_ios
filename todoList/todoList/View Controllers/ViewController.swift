@@ -9,7 +9,7 @@
 import RealmSwift
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     //
     // MARK: - Variables And Properties
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private let realm = try! Realm()
     private var data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
+    var searchResults = try! Realm().objects(ToDoItems1.self)
     
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -29,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //
 
     @IBOutlet var table: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
     
     @IBAction func didTapAddButton () {
         guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? EntryViewController else { return }
@@ -46,13 +48,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let realm = try! Realm()
           
         switch scopeBar.selectedSegmentIndex {
-        case 1:
-            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
-        case 2:
-            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "date", ascending: true)
-        default:
-            data = realm.objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
-          }
+            case 1:
+                searchResults = realm.objects(ToDoItems1.self).sorted(byKeyPath: "item", ascending: true)
+            case 2:
+                searchResults = realm.objects(ToDoItems1.self).sorted(byKeyPath: "date", ascending: true)
+            default:
+                searchResults = realm.objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
+        }
           
         table.reloadData()
     }
@@ -68,6 +70,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.delegate = self
         table.dataSource = self
+        
+        searchBar.delegate = self
+        searchResults = data
     }
     
     
@@ -79,16 +84,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - Table View
     //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return searchResults.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
-        let prior = getPriorityLabel(index: data[indexPath.row].priority)
+        let prior = getPriorityLabel(index: searchResults[indexPath.row].priority)
     
-        cell.textLabel?.text = prior + "  " + data[indexPath.row].item
-        cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
+        cell.textLabel?.text = prior + "  " + searchResults[indexPath.row].item
+        cell.detailTextLabel?.text = Self.dateFormatter.string(from: searchResults[indexPath.row].date)
         
         return cell
     }
@@ -115,10 +120,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            let myItem = data[indexPath.row]
+            let myItem = searchResults[indexPath.row]
             self.deleteItem(myItem: myItem)
         }
     }
+    
+    
+    //
+    // MARK: - Search Bar
+    //
+    
+    func filterResultsWithSearchString(searchString: String) {
+        let predicate = NSPredicate(format: "item BEGINSWITH [c]%@", searchString)
+        let realm = try! Realm()
+        searchResults = realm.objects(ToDoItems1.self).filter(predicate)
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            searchResults = data
+            table.reloadData()
+            return
+        }
+        
+        let searchString = searchBar.text!
+            filterResultsWithSearchString(searchString: searchString)
+            table.reloadData()
+    }
+    
     
     //
     // MARK: - Private Methods
@@ -126,9 +156,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func refresh(){
         // update data variables on refresh
-        data = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
+        searchResults = try! Realm().objects(ToDoItems1.self).sorted(byKeyPath: "priority", ascending: true)
         table.reloadData()
     }
+    
     
     func deleteItem(myItem: ToDoItems1){
         realm.beginWrite()
@@ -137,6 +168,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         self.refresh()
     }
+    
     
     func getPriorityLabel(index: Int) -> String {
         var priorityField: String
@@ -154,7 +186,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return priorityField
     }
-    
-    
-
 }
+
+

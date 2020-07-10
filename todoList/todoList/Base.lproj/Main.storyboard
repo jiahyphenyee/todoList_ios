@@ -15,8 +15,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hYu-aq-EeC">
-                                <rect key="frame" x="0.0" y="148.5" width="414" height="32"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="hYu-aq-EeC">
+                                <rect key="frame" x="0.0" y="205" width="414" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Priority"/>
                                     <segment title="A - Z"/>
@@ -26,20 +27,24 @@
                                     <action selector="sortSegmentWithSender:" destination="BYZ-38-t0r" eventType="valueChanged" id="bXT-Vh-kHV"/>
                                 </connections>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k9c-7f-xNr">
-                                <rect key="frame" x="0.0" y="171" width="414" height="722"/>
+                            <searchBar contentMode="redraw" placeholder="Search To-do" translatesAutoresizingMaskIntoConstraints="NO" id="Mip-cR-mW4">
+                                <rect key="frame" x="0.0" y="148.5" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k9c-7f-xNr">
+                                <rect key="frame" x="0.0" y="236" width="414" height="626"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="hYu-aq-EeC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FNH-Il-a00"/>
-                            <constraint firstItem="k9c-7f-xNr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qc2-3u-Abx"/>
-                            <constraint firstItem="k9c-7f-xNr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ran-af-ZAb"/>
-                            <constraint firstItem="k9c-7f-xNr" firstAttribute="top" secondItem="hYu-aq-EeC" secondAttribute="bottom" id="cL8-lj-fC4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hYu-aq-EeC" secondAttribute="trailing" id="kWA-Yq-bF3"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k9c-7f-xNr" secondAttribute="bottom" id="sRu-Ab-dDK"/>
-                            <constraint firstItem="hYu-aq-EeC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="v7i-xm-C8t"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k9c-7f-xNr" secondAttribute="bottom" id="4fm-xg-9b7"/>
+                            <constraint firstItem="Mip-cR-mW4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TUK-YY-x9w"/>
+                            <constraint firstItem="k9c-7f-xNr" firstAttribute="top" secondItem="hYu-aq-EeC" secondAttribute="bottom" id="VL2-7y-kyE"/>
+                            <constraint firstItem="k9c-7f-xNr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Vg2-Aa-Wqf"/>
+                            <constraint firstItem="k9c-7f-xNr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aWz-Ns-Mak"/>
+                            <constraint firstItem="Mip-cR-mW4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="fU7-r6-KFp"/>
+                            <constraint firstItem="Mip-cR-mW4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yQE-9Q-Sbf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -51,6 +56,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="Mip-cR-mW4" id="NSi-4u-v1E"/>
                         <outlet property="table" destination="k9c-7f-xNr" id="nVI-0R-u6Z"/>
                     </connections>
                 </viewController>
