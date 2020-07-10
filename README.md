@@ -20,3 +20,4 @@ This is a to-do list ios application built with Swift 5 and Realm Swift
 * Delete to-do item (swipe or delete button)
 * Edit/update to-do details
 * Sort list by priority (default), alphabet or due date
+* Search by to-do item name
