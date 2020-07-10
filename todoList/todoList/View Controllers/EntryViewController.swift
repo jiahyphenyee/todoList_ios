@@ -20,8 +20,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     private let realm = try! Realm()
     // let list view controller know that an entry is added -> refresh
     public var completionHandler: (() -> Void)?
-    private var priorityField = 1
-    private var labelField = "hello"
+    private var labelField: String!
     
     
     //
@@ -31,19 +30,12 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var textField: UITextField!
     @IBOutlet var detailsField: UITextView!
     @IBOutlet var datePicker: UIDatePicker!
+    @IBOutlet var prioritySegment: UISegmentedControl!
+    @IBOutlet var labelSegment: UISegmentedControl!
     
     @IBAction func priorityDidChange(sender: Any) {
         let scopeBar = sender as! UISegmentedControl
-        switch scopeBar.selectedSegmentIndex {
-            case 0:
-                priorityField = 0
-            case 1:
-                priorityField = 1
-            case 2:
-                priorityField = 2
-            default:
-                break
-        }
+        prioritySegment.selectedSegmentIndex =  scopeBar.selectedSegmentIndex
     }
     
     @IBAction func labelDidChange(sender: Any) {
@@ -109,10 +101,10 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             detailsField.textColor = UIColor.black
         }
     }
-    
+
     func detailsFieldDidEndEditing(_ detailsField: UITextView) {
         if detailsField.text.isEmpty {
-            detailsField.text = "Placeholder"
+            detailsField.text = "Description"
             detailsField.textColor = UIColor.lightGray
         }
     }
@@ -137,7 +129,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         newItem.date = date
         newItem.item = textField.text!
         newItem.details = detailsField.text ?? ""
-        newItem.priority = priorityField
+        newItem.priority = prioritySegment.selectedSegmentIndex
         newItem.label = labelField
         realm.add(newItem)
         try! realm.commitWrite()
@@ -156,6 +148,9 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         textField.text = toDoItem.item
         detailsField.text = toDoItem.details
         datePicker.setDate(toDoItem.date, animated: false)
+        prioritySegment.selectedSegmentIndex = toDoItem.priority
+        labelSegment.selectedSegmentIndex = getLabelIndex(label: toDoItem.label)
+        
     }
     
     // update database
@@ -164,7 +159,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             toDoItem.item = textField.text!
             toDoItem.date = datePicker.date
             toDoItem.details = detailsField.text!
-            toDoItem.priority = priorityField
+            toDoItem.priority = prioritySegment.selectedSegmentIndex
             toDoItem.label = labelField
         }
         
@@ -203,6 +198,28 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    
+    func getLabelIndex(label: String) -> Int {
+        var labelIndex = 0
+        
+        switch label {
+            case "👩🏻":
+                labelIndex = 0   // personal
+            case "💻":
+                labelIndex = 1    // work
+            case "🛒":
+                labelIndex = 2    // shopping
+            case "🏋🏽‍♀️":
+                labelIndex = 3    // fitness
+            case "📚":
+                labelIndex = 4   // reading
+            default:
+                break
+        }
+        
+        return labelIndex
     }
     
 }

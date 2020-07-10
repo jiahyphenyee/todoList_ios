@@ -87,7 +87,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
         let prior = getPriorityLabel(index: data[indexPath.row].priority)
     
-        cell.textLabel?.text = prior + data[indexPath.row].item
+        cell.textLabel?.text = prior + "  " + data[indexPath.row].item
         cell.detailTextLabel?.text = Self.dateFormatter.string(from: data[indexPath.row].date)
         
         return cell

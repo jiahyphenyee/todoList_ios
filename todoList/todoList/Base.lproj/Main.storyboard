@@ -138,6 +138,8 @@
                     <connections>
                         <outlet property="datePicker" destination="MIL-fu-M0q" id="dGR-wY-w8I"/>
                         <outlet property="detailsField" destination="6ch-BW-smC" id="6TW-Ww-Eff"/>
+                        <outlet property="labelSegment" destination="qRE-rC-fRQ" id="JsH-6V-MD7"/>
+                        <outlet property="prioritySegment" destination="b9F-WO-DPg" id="OcY-S6-ZcP"/>
                         <outlet property="textField" destination="ygo-zt-Lns" id="u5P-lL-0su"/>
                     </connections>
                 </viewController>
