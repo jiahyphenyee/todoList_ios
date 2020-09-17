@@ -9,7 +9,7 @@
 import RealmSwift
 import UIKit
 
-class EntryViewController: UIViewController, UITextFieldDelegate {
+class ItemFormViewController: UIViewController, UITextFieldDelegate {
     
     //
     // MARK: - Variables And Properties

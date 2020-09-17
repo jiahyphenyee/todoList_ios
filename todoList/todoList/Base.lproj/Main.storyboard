@@ -64,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="117.85714285714285"/>
         </scene>
-        <!--Entry View Controller-->
+        <!--Item Form View Controller-->
         <scene sceneID="Ovc-8T-HsK">
             <objects>
-                <viewController storyboardIdentifier="enter" id="l9N-dh-poD" customClass="EntryViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="enter" id="l9N-dh-poD" customClass="ItemFormViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P5b-pE-Z40">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -153,10 +153,10 @@
             </objects>
             <point key="canvasLocation" x="2125" y="118"/>
         </scene>
-        <!--View View Controller-->
+        <!--Item Details View Controller-->
         <scene sceneID="LH6-NR-TXt">
             <objects>
-                <viewController storyboardIdentifier="view" id="rQ0-0o-JAf" customClass="ViewViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="view" id="rQ0-0o-JAf" customClass="ItemDetailsViewController" customModule="todoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gO0-Dq-Qe8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

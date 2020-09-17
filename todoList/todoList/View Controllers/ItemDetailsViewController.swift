@@ -9,7 +9,7 @@
 import RealmSwift
 import UIKit
 
-class ViewViewController: UIViewController {
+class ItemDetailsViewController: UIViewController {
     
     //
     // MARK: - Variables And Properties

@@ -33,7 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var searchBar: UISearchBar!
     
     @IBAction func didTapAddButton () {
-        guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? EntryViewController else { return }
+        guard let vc = storyboard?.instantiateViewController(identifier: "enter") as? ItemFormViewController else { return }
         
         vc.completionHandler = {[weak self] in
             self?.refresh()
@@ -104,7 +104,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // open item to view details
         let item = data[indexPath.row]
-        guard let vc = storyboard?.instantiateViewController(identifier: "view") as? ViewViewController else { return }
+        guard let vc = storyboard?.instantiateViewController(identifier: "view") as? ItemDetailsViewController else { return }
         
         vc.item = item
         vc.deletionHandler = {[weak self] in self?.refresh()}
