@@ -1,5 +1,5 @@
 # todoList_ios
-This is a to-do list ios application built with Swift 5 and Realm Swift
+This is a to-do list ios application built with Swift 5 and Realm Swift!
 
 ## Setting up
 1. `cd todoList`
